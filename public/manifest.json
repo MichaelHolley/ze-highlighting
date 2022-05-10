@@ -1,0 +1,30 @@
+{
+  "name": "ze-highlighting",
+  "description": "Chrome-extension for AraCom time-tracking tool",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "webNavigation"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://zeiterfassung.aracom.de/",
+        "*://zeiterfassung.aracom.de/?monat=*",
+        "*://zeiterfassung.aracom.de/stundenanzeige.php*"
+      ],
+      "js": [
+        "stundenanzeige.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://zeiterfassung.aracom.de/stundenerfassung.php*"
+      ],
+      "js": [
+        "stundenerfassung.js"
+      ]
+    }
+  ]
+}

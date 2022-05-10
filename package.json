@@ -1,0 +1,20 @@
+{
+  "name": "ze-highlighting",
+  "version": "1.0.0",
+  "description": "Chrome-extension for AraCom time-tracking tool",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack/webpack.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "0.0.184",
+    "copy-webpack-plugin": "^10.2.4",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
