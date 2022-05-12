@@ -9,6 +9,8 @@ enum Route {
 	stundenerfassung,
 }
 
+highlighting();
+
 addEventListener('hashchange', (event) => {
 	highlighting();
 });
