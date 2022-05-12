@@ -10,20 +10,10 @@
   "content_scripts": [
     {
       "matches": [
-        "*://zeiterfassung.aracom.de/",
-        "*://zeiterfassung.aracom.de/?monat=*",
-        "*://zeiterfassung.aracom.de/stundenanzeige.php*"
+        "*://zeiterfassung.aracom.de/*"
       ],
       "js": [
-        "stundenanzeige.js"
-      ]
-    },
-    {
-      "matches": [
-        "*://zeiterfassung.aracom.de/stundenerfassung.php*"
-      ],
-      "js": [
-        "stundenerfassung.js"
+        "highlighting.js"
       ]
     }
   ]
