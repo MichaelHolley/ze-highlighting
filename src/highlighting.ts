@@ -35,8 +35,10 @@ function highlighting() {
 	for (let row of rows) {
 		// set reserved days for holidays
 		if (
-			row.attributes.getNamedItem(config.dataKey)?.value === '' &&
-			row.id === config.rowId
+			(row.attributes.getNamedItem(config.dataKey)?.value === '' ||
+				row.attributes.getNamedItem(config.dataKey)?.value === undefined) &&
+			row[route === Route.stundenanzeige ? 'className' : 'id'] ===
+				config.classId
 		) {
 			let tds = row.getElementsByTagName('td');
 			for (let td of tds) {
@@ -47,7 +49,7 @@ function highlighting() {
 		}
 
 		// set project-colors
-		if (row.attributes.getNamedItem('data-lfdnr')?.value !== '') {
+		if (row.attributes.getNamedItem(config.dataKey)?.value !== '') {
 			let projectCell = row.getElementsByTagName('td')[config.columnIndex];
 			if (projectCell !== undefined) {
 				let key = projectCell.textContent ?? 'empty';
@@ -87,13 +89,13 @@ function getConfigByPage(route: Route) {
 	if (route === Route.stundenanzeige) {
 		return {
 			dataKey: 'data-lfdnr',
-			rowId: ' ',
+			classId: ' ',
 			columnIndex: 7,
 		};
 	} else {
 		return {
 			dataKey: 'data-me',
-			rowId: 'me-',
+			classId: 'me-',
 			columnIndex: 6,
 		};
 	}
