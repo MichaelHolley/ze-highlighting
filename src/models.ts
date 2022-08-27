@@ -8,3 +8,8 @@ export interface Highlighting {
   key: string;
   color: Color;
 }
+
+export enum Route {
+  stundenanzeige,
+  stundenerfassung,
+}

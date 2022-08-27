@@ -1,13 +1,9 @@
-import { Color, Highlighting } from "./models";
+import { Color, Highlighting, Route } from "./models";
+import { generateRandomColorRGBA } from "./utility";
 
 const colors: Highlighting[] = [
   { key: "empty", color: "rgba(84, 181, 75, 0.25)" },
 ];
-
-enum Route {
-  stundenanzeige,
-  stundenerfassung,
-}
 
 highlighting();
 
@@ -75,15 +71,6 @@ function getProjectColor(key: string): Color {
 
     return newColor;
   }
-}
-
-function generateRandomColorRGBA(): any {
-  var o = Math.round,
-    r = Math.random,
-    s = 255;
-  return (
-    "rgba(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + "," + 0.4 + ")"
-  );
 }
 
 function getConfigByPage(route: Route) {
