@@ -1,32 +1,20 @@
-import { Color, Highlighting, Route } from "./models";
-import { generateRandomColorRGBA } from "./utility";
-
-const colors: Highlighting[] = [
-  { key: "empty", color: "rgba(84, 181, 75, 0.25)" },
-];
+import { Highlighting, Route } from "./models";
 
 highlighting();
 
-addEventListener("hashchange", (event) => {
+addEventListener("hashchange", () => {
   highlighting();
 });
 
 function highlighting() {
-  const urlRoute = window.location.pathname.substring(1).replace(".php", "");
-  var route = undefined;
-  if (urlRoute === "" || urlRoute === "stundenanzeige") {
-    route = Route.stundenanzeige;
-  }
-
-  if (urlRoute === "stundenerfassung") {
-    route = Route.stundenerfassung;
-  }
+  var route = getRoute();
 
   if (route === undefined) return;
 
   const config = getConfigByPage(route);
 
   const rows = document.getElementsByTagName("tr");
+  const cellsToColor: { cell: HTMLTableCellElement; key: string }[] = [];
 
   for (let row of rows) {
     // set reserved days for holidays
@@ -38,7 +26,7 @@ function highlighting() {
     ) {
       let tds = row.getElementsByTagName("td");
       for (let td of tds) {
-        colorTableCell(td, getProjectColor("empty"));
+        cellsToColor.push({ cell: td, key: "empty" });
       }
 
       continue;
@@ -50,27 +38,32 @@ function highlighting() {
 
       if (projectCell !== undefined) {
         let key = projectCell.innerText.trim() ?? "empty";
-        projectCell.style.background = getProjectColor(key);
+        key = key.substring(key.search("[0-9].*"));
+        cellsToColor.push({ cell: projectCell, key: key });
       }
     }
   }
+
+  colorTableCells(cellsToColor);
 }
 
-function colorTableCell(cell: HTMLTableCellElement, color: Color) {
-  cell.style.backgroundColor = color;
-}
+function colorTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
+  chrome.storage.sync.get("colors", (res) => {
+    let storedColors = res.colors as Highlighting[];
 
-function getProjectColor(key: string): Color {
-  let storedColor = colors.find((c) => c.key === key);
+    for (let cell of cells) {
+      let color = storedColors.find((c) => c.key === cell.key);
 
-  if (storedColor !== undefined) {
-    return storedColor.color;
-  } else {
-    let newColor = generateRandomColorRGBA();
-    colors.push({ key: key, color: newColor });
+      if (color === undefined) {
+        color = { key: cell.key, color: generateRandomColorRGBA() };
+        storedColors.push(color);
+      }
 
-    return newColor;
-  }
+      cell.cell.style.backgroundColor = color.color;
+    }
+
+    chrome.storage.sync.set({ colors: storedColors });
+  });
 }
 
 function getConfigByPage(route: Route) {
@@ -87,4 +80,27 @@ function getConfigByPage(route: Route) {
       columnIndex: 6,
     };
   }
+}
+
+function generateRandomColorRGBA(): any {
+  var o = Math.round,
+    r = Math.random,
+    s = 255;
+
+  return (
+    "rgba(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + "," + 0.4 + ")"
+  );
+}
+
+function getRoute() {
+  const urlRoute = window.location.pathname.substring(1).replace(".php", "");
+
+  if (urlRoute === "" || urlRoute === "stundenanzeige") {
+    return Route.stundenanzeige;
+  }
+
+  if (urlRoute === "stundenerfassung") {
+    return Route.stundenerfassung;
+  }
+  return undefined;
 }
