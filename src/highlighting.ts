@@ -50,6 +50,10 @@ function highlighting() {
           key = key.substring("Projekt/Auftrag".length).trim();
         }
 
+        if (key === "" || !key) {
+          key = "empty";
+        }
+
         cellsToColor.push({ cell: projectCell, key: key });
       }
     }
