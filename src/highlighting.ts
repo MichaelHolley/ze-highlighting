@@ -19,10 +19,13 @@ function highlighting() {
   for (let row of rows) {
     // set reserved days for holidays
     if (
-      (row.attributes.getNamedItem(config.dataKey)?.value === "" ||
+      ((row.attributes.getNamedItem(config.dataKey)?.value === "" ||
         row.attributes.getNamedItem(config.dataKey)?.value === undefined) &&
-      row[route === Route.stundenanzeige ? "className" : "id"] ===
-        config.classId
+        row[route === Route.stundenanzeige ? "className" : "id"] ===
+          config.classId) ||
+      row?.cells[config.columnIndex + 1]?.innerText
+        ?.toLowerCase()
+        .includes("urlaub")
     ) {
       let tds = row.getElementsByTagName("td");
       for (let td of tds) {
