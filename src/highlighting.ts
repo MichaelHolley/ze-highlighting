@@ -38,7 +38,18 @@ function highlighting() {
 
       if (projectCell !== undefined) {
         let key = projectCell.innerText.trim() ?? "empty";
-        key = key.substring(key.search("[0-9].*"));
+
+        if (route === Route.stundenanzeige && key.startsWith("Projekt")) {
+          key = key.substring("Projekt".length).trim();
+        }
+
+        if (
+          route === Route.stundenerfassung &&
+          key.startsWith("Projekt/Auftrag")
+        ) {
+          key = key.substring("Projekt/Auftrag".length).trim();
+        }
+
         cellsToColor.push({ cell: projectCell, key: key });
       }
     }
