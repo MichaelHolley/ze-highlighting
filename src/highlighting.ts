@@ -57,6 +57,10 @@ function highlighting() {
           key = "empty";
         }
 
+        if (isNumeric(key)) {
+          continue;
+        }
+
         cellsToColor.push({ cell: projectCell, key: key });
       }
     }
@@ -121,4 +125,14 @@ function getRoute() {
     return Route.stundenerfassung;
   }
   return undefined;
+}
+
+function isNumeric(str: string) {
+  if (typeof str != "string") return false; // only process strings!
+
+  /**
+   * use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)
+   * and ensure strings of whitespace fail
+   */
+  return !isNaN(str as any) && !isNaN(parseFloat(str));
 }
