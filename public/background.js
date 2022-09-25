@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(() => {
     colors: [
       {
         key: "empty",
-        color: "rgba(84, 181, 75, 0.25)",
+        color: "#54B54B",
       },
     ],
   });

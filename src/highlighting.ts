@@ -6,6 +6,10 @@ addEventListener("hashchange", () => {
   highlighting();
 });
 
+chrome.storage.onChanged.addListener(() => {
+  highlighting();
+});
+
 function highlighting() {
   var route = getRoute();
 
@@ -57,7 +61,12 @@ function highlighting() {
           key = "empty";
         }
 
-        if (isNumeric(key)) {
+        if (
+          isNumeric(key) ||
+          key.startsWith("Kunde") ||
+          key.includes("Urlaub") ||
+          key.match(/[0-9]+: /)
+        ) {
           continue;
         }
 
@@ -77,11 +86,16 @@ function colorTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
       let color = storedColors.find((c) => c.key === cell.key);
 
       if (color === undefined) {
-        color = { key: cell.key, color: generateRandomColorRGBA() };
+        color = { key: cell.key, color: generateRandomColorHex() };
         storedColors.push(color);
       }
 
-      cell.cell.style.backgroundColor = color.color;
+      let rgbColor = hexToRgb(color.color);
+      if (rgbColor) {
+        cell.cell.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${
+          rgbColor.b
+        }, ${color.key === "empty" ? 0.25 : 0.4})`;
+      }
     }
 
     chrome.storage.sync.set({ colors: storedColors });
@@ -104,14 +118,8 @@ function getConfigByPage(route: Route) {
   }
 }
 
-function generateRandomColorRGBA(): any {
-  var o = Math.round,
-    r = Math.random,
-    s = 255;
-
-  return (
-    "rgba(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + "," + 0.4 + ")"
-  );
+function generateRandomColorHex(): any {
+  return "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
 }
 
 function getRoute() {
@@ -135,4 +143,15 @@ function isNumeric(str: string) {
    * and ensure strings of whitespace fail
    */
   return !isNaN(str as any) && !isNaN(parseFloat(str));
+}
+
+function hexToRgb(hex: string) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
+    : null;
 }
