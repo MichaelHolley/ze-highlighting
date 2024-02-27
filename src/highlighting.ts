@@ -92,9 +92,8 @@ function colorTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
 
       let rgbColor = hexToRgb(color.color);
       if (rgbColor) {
-        cell.cell.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${
-          rgbColor.b
-        }, ${color.key === "empty" ? 0.25 : 0.4})`;
+        cell.cell.style.borderRightWidth = "6px";
+        cell.cell.style.borderRightColor = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
       }
     }
 
@@ -132,6 +131,7 @@ function getRoute() {
   if (urlRoute === "stundenerfassung") {
     return Route.stundenerfassung;
   }
+
   return undefined;
 }
 
