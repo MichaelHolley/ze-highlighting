@@ -28,8 +28,8 @@ chrome.storage.sync.get("colors", (res) => {
           chrome.storage.sync.set({ colors: storedColors });
         }
       });
-      inputRow.appendChild(inputColor);
 
+      inputRow.appendChild(inputColor);
       container.appendChild(inputRow);
     });
   }
