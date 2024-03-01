@@ -1,3 +1,5 @@
+[![Build](https://github.com/MichaelHolley/ze-highlighting/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/MichaelHolley/ze-highlighting/actions/workflows/CI.yml)
+
 # ZE Highlighting
 
 A Chrome-Extension improving the functionality of a certain time-tracking tool.
