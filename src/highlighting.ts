@@ -1,4 +1,10 @@
 import { Highlighting, Route } from "./models";
+import {
+  generateRandomColorHex,
+  getConfigByPage,
+  hexToRgb,
+  isNumeric,
+} from "./utils";
 
 highlighting();
 
@@ -13,7 +19,9 @@ chrome.storage.onChanged.addListener(() => {
 function highlighting() {
   var route = getRoute();
 
-  if (route === undefined) return;
+  if (route === undefined) {
+    return;
+  }
 
   const config = getConfigByPage(route);
 
@@ -31,11 +39,8 @@ function highlighting() {
         ?.toLowerCase()
         .includes("urlaub")
     ) {
-      let tds = row.getElementsByTagName("td");
-      for (let td of tds) {
-        cellsToColor.push({ cell: td, key: "empty" });
-      }
-
+      let cell = row.getElementsByTagName("td")[config.columnIndex];
+      cellsToColor.push({ cell: cell, key: "empty" });
       continue;
     }
 
@@ -75,21 +80,23 @@ function highlighting() {
     }
   }
 
-  colorTableCells(cellsToColor);
+  styleTableCells(cellsToColor);
 }
 
-function colorTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
+function styleTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
   chrome.storage.sync.get("colors", (res) => {
     let storedColors = res.colors as Highlighting[];
 
     for (let cell of cells) {
       let color = storedColors.find((c) => c.key === cell.key);
 
+      // color not stored already -> generate one
       if (color === undefined) {
         color = { key: cell.key, color: generateRandomColorHex() };
         storedColors.push(color);
       }
 
+      // style cell
       let rgbColor = hexToRgb(color.color);
       if (rgbColor) {
         cell.cell.style.borderRightWidth = "6px";
@@ -99,26 +106,6 @@ function colorTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
 
     chrome.storage.sync.set({ colors: storedColors });
   });
-}
-
-function getConfigByPage(route: Route) {
-  if (route === Route.stundenanzeige) {
-    return {
-      dataKey: "data-lfdnr",
-      classId: " ",
-      columnIndex: 7,
-    };
-  } else {
-    return {
-      dataKey: "data-me",
-      classId: "me-",
-      columnIndex: 6,
-    };
-  }
-}
-
-function generateRandomColorHex(): any {
-  return "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
 }
 
 function getRoute() {
@@ -133,25 +120,4 @@ function getRoute() {
   }
 
   return undefined;
-}
-
-function isNumeric(str: string) {
-  if (typeof str != "string") return false; // only process strings!
-
-  /**
-   * use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)
-   * and ensure strings of whitespace fail
-   */
-  return !isNaN(str as any) && !isNaN(parseFloat(str));
-}
-
-function hexToRgb(hex: string) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
-    : null;
 }
