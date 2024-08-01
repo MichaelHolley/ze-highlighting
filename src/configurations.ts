@@ -9,6 +9,7 @@ export const StdAnzeigeConfig: RouteConfiguration = {
   classId: " ",
   columnIndex: 7,
 };
+
 export const StdErfassungConfig: RouteConfiguration = {
   dataKey: "data-me",
   classId: "me-",
