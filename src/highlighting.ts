@@ -2,6 +2,7 @@ import { Highlighting, Route } from "./models";
 import {
   generateRandomColorHex,
   getConfigByPage,
+  getRoute,
   hexToRgb,
   isNumeric,
 } from "./utils";
@@ -34,7 +35,7 @@ function highlighting() {
       ((row.attributes.getNamedItem(config.dataKey)?.value === "" ||
         row.attributes.getNamedItem(config.dataKey)?.value === undefined) &&
         row[route === Route.stundenanzeige ? "className" : "id"] ===
-          config.classId) ||
+        config.classId) ||
       row?.cells[config.columnIndex + 1]?.innerText
         ?.toLowerCase()
         .includes("urlaub")
@@ -78,6 +79,26 @@ function highlighting() {
         cellsToColor.push({ cell: projectCell, key: key });
       }
     }
+
+    if (!!config.descriptionColumIndex) {
+      let descriptionCell = row.getElementsByTagName("td")[config.descriptionColumIndex];
+
+      if (descriptionCell !== undefined) {
+        let readmore = descriptionCell.querySelector(".readmore");
+        if (!!readmore) {
+          // remove collapse button
+          descriptionCell.querySelector(".readmore-action")?.remove()
+
+          // remove ellipsis from description
+          const description: HTMLDivElement = readmore.children[0] as HTMLDivElement;
+          if (description !== undefined) {
+            description.classList.remove("ellipse");
+            description.style.maxWidth = "unset";
+          }
+        }
+      }
+    }
+
   }
 
   styleTableCells(cellsToColor);
@@ -106,18 +127,4 @@ function styleTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
 
     chrome.storage.sync.set({ colors: storedColors });
   });
-}
-
-function getRoute() {
-  const urlRoute = window.location.pathname.substring(1).replace(".php", "");
-
-  if (urlRoute === "" || urlRoute === "stundenanzeige") {
-    return Route.stundenanzeige;
-  }
-
-  if (urlRoute === "stundenerfassung") {
-    return Route.stundenerfassung;
-  }
-
-  return undefined;
 }
