@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack/webpack.config.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Michael Holley",
   "license": "ISC",
   "devDependencies": {
     "@types/chrome": "^0.0.306",
