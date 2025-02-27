@@ -1,6 +1,6 @@
 {
   "name": "ze-highlighting",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Chrome-extension for AraCom time-tracking tool",
   "main": "index.js",
   "scripts": {
