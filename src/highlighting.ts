@@ -94,6 +94,7 @@ function highlighting() {
           if (description !== undefined) {
             description.classList.remove("ellipse");
             description.style.maxWidth = "unset";
+            description.style.paddingRight = "0px";
           }
         }
       }

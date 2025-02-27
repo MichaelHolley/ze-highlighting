@@ -9,6 +9,7 @@ export const StdAnzeigeConfig: RouteConfiguration = {
   dataKey: "data-lfdnr",
   classId: " ",
   columnIndex: 7,
+  descriptionColumIndex: 5
 };
 
 export const StdErfassungConfig: RouteConfiguration = {
