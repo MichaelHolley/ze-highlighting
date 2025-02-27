@@ -2,6 +2,7 @@ export interface RouteConfiguration {
   dataKey: string;
   classId: string;
   columnIndex: number;
+  descriptionColumIndex?: number;
 }
 
 export const StdAnzeigeConfig: RouteConfiguration = {
@@ -14,4 +15,5 @@ export const StdErfassungConfig: RouteConfiguration = {
   dataKey: "data-me",
   classId: "me-",
   columnIndex: 6,
+  descriptionColumIndex: 11
 };
