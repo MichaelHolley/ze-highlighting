@@ -4,7 +4,8 @@
   "description": "Chrome-extension for AraCom time-tracking tool",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack/webpack.config.js"
+    "build": "webpack --config webpack/webpack.config.js",
+    "build:watch": "webpack --config webpack/webpack.config.js --watch"
   },
   "author": "Michael Holley",
   "license": "ISC",
