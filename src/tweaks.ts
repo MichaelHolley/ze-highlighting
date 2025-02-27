@@ -15,43 +15,43 @@ const bookingTableId = "std-buchungen-body";
 const duractionClass = ".td-dauer";
 const durationValueClass = ".val-show";
 
-export const initTweaks = function() {
+export const initTweaks = function () {
 
-   // FUNCTIONS
-   const calculateDailyWorkingHours = function(){
-    function calculateDuration(elements: Array<Element>): number{
+  // FUNCTIONS
+  const calculateDailyWorkingHours = function () {
+    function calculateDuration(elements: Array<Element>): number {
       let currentDuration = 0.00;
-       for(const child of elements){
-              const durationElement = child.querySelector(duractionClass);
-              if(!durationElement){
-                  return 0;
-              }
+      for (const child of elements) {
+        const durationElement = child.querySelector(duractionClass);
+        if (!durationElement) {
+          return 0;
+        }
 
-              const durationValueElement = durationElement.querySelector(durationValueClass);
-              if(!durationValueElement){
-                return 0;
-              }
+        const durationValueElement = durationElement.querySelector(durationValueClass);
+        if (!durationValueElement) {
+          return 0;
+        }
 
-              const floatString = durationValueElement.textContent?.replace(",",".");
-              if(!floatString){
-                continue ;
-              }
-              const floatValue = parseFloat(floatString);
-              currentDuration += floatValue;
-          }
+        const floatString = durationValueElement.textContent?.replace(",", ".");
+        if (!floatString) {
+          continue;
+        }
+        const floatValue = parseFloat(floatString);
+        currentDuration += floatValue;
+      }
 
       return currentDuration;
     }
 
-    function createDurationElementIfNotExisting(header: Element,duration: number){
-      if(header.querySelector(".th-duration")){
+    function createDurationElementIfNotExisting(header: Element, duration: number) {
+      if (header.querySelector(".th-duration")) {
         return;
       }
 
       const element = document.createElement("span");
       element.classList.add("th-duration");
       element.setAttribute("style", "font-weight:bold;width:35px;line-height: unset;");
-  
+
       const displayDuration = duration == null ? "?" : duration;
       element.innerText = " \u00A0\u00A0 " + displayDuration + " Std"
 
@@ -59,21 +59,21 @@ export const initTweaks = function() {
     }
 
     const table = document.getElementById(bookingTableId);
-    if(!table){
+    if (!table) {
       return;
     }
 
     let header;
     let children = Array<Element>();
     let duration = 0.00;
-    for(const row of table.children){
+    for (const row of table.children) {
       // header element of days has no id
-      if(row.id == "" ){
-        if(children.length != 0){
+      if (row.id == "") {
+        if (children.length != 0) {
           duration = calculateDuration(children);
 
-          if(header){
-            createDurationElementIfNotExisting(header,duration);
+          if (header) {
+            createDurationElementIfNotExisting(header, duration);
           }
         }
 
@@ -81,60 +81,60 @@ export const initTweaks = function() {
         children = [];
 
       }
-      else{
+      else {
         children.push(row);
       }
     }
 
     duration = calculateDuration(children);
-    if(header){
-      createDurationElementIfNotExisting(header,duration);
+    if (header) {
+      createDurationElementIfNotExisting(header, duration);
     }
   }
 
-  const highlightTodoComments = function() {
-      // get all comments (div elements)
-      const commentNodes = Array(...document.getElementsByClassName("readmore-text"));
+  const highlightTodoComments = function () {
+    // get all comments (div elements)
+    const commentNodes = Array(...document.getElementsByClassName("readmore-text"));
 
-      const todoNodes = commentNodes.filter(node => node.textContent?.toLowerCase().includes(highlightKeyword))
+    const todoNodes = commentNodes.filter(node => node.textContent?.toLowerCase().includes(highlightKeyword))
 
-      for(let node of todoNodes) {
-          findAndHighlightContainingTableRow(node, todoHightlightColor);
-      }
+    for (let node of todoNodes) {
+      findAndHighlightContainingTableRow(node, todoHightlightColor);
+    }
   }
 
-  const findAndHighlightContainingTableRow = function(node: Element, color:string) {
-      let todoTds = [];
-      // get tr
-      const tr =(node.closest("tr"));
-      if(!tr){
-        return;
-      }
-      // get all columns in table row
-      todoTds.push(...tr.children)
+  const findAndHighlightContainingTableRow = function (node: Element, color: string) {
+    let todoTds = [];
+    // get tr
+    const tr = (node.closest("tr"));
+    if (!tr) {
+      return;
+    }
+    // get all columns in table row
+    todoTds.push(...tr.children)
 
-      // override the background-color of all columns
-      for(let todoTd of todoTds) {
-          todoTd.setAttribute("style", "background-color: " + color);
-      }
+    // override the background-color of all columns
+    for (let todoTd of todoTds) {
+      todoTd.setAttribute("style", "background-color: " + color);
+    }
   }
 
-  const updateStartDate = function() {
-      const insertFrom = document.getElementById("insert-von") as HTMLInputElement | null;
-      const insertUntil = document.getElementById("insert-bis") as HTMLInputElement | null;
-      
-      if(!insertFrom || !insertUntil) {
-          return;
-      }
+  const updateStartDate = function () {
+    const insertFrom = document.getElementById("insert-von") as HTMLInputElement | null;
+    const insertUntil = document.getElementById("insert-bis") as HTMLInputElement | null;
 
-      // set value of intertUntil as value of insertFrom input
-      insertFrom.value = insertUntil.value;
-      insertUntil.value = "";
-      insertUntil.focus();
+    if (!insertFrom || !insertUntil) {
+      return;
+    }
+
+    // set value of intertUntil as value of insertFrom input
+    insertFrom.value = insertUntil.value;
+    insertUntil.value = "";
+    insertUntil.focus();
   }
 
   // Causes green borders to appear for today's calendar field
-  const injectStyle = function() {
+  const injectStyle = function () {
     const css = document.createElement("style");
     css.type = "text/css";
     css.appendChild(document.createTextNode("\
@@ -148,15 +148,15 @@ export const initTweaks = function() {
     document.getElementsByTagName("head")[0].appendChild(css);
   }
 
-  const onStdTagChanged = function(mutations: MutationRecord[]) {
+  const onStdTagChanged = function (mutations: MutationRecord[]) {
     if (mutations[0].attributeName == "value") {
       onSelectedDayChanged();
     }
   };
 
-  const onSelectedDayChanged = function() {
+  const onSelectedDayChanged = function () {
     const dateParts = stdDay.value?.split('.');
-    if(!dateParts || dateParts.length < 2){
+    if (!dateParts || dateParts.length < 2) {
       return;
     }
     const selectedDate = new Date(Date.UTC(parseInt(dateParts[2]), parseInt(dateParts[1]) - 1, parseInt(dateParts[0]), 0, 0, 0, 0));
@@ -229,28 +229,28 @@ export const initTweaks = function() {
   var stdDayBtn: Element;
   var stdDayObserver: MutationObserver;
 
-    const dayEl = document.getElementById("std-tag") as HTMLInputElement | null;
+  const dayEl = document.getElementById("std-tag") as HTMLInputElement | null;
 
-    if(dayEl != null){
-      stdDay = dayEl;
-      stdDayObserver = new MutationObserver(onStdTagChanged);
-      stdDayObserver.observe(stdDay, { attributes: true });
-    }
-      
-    const dayElBtn = document.getElementById("std-tag-btn");
-    if(dayElBtn != null){
-      stdDayBtn = dayElBtn;
-    }
-    // input[type="hidden"] doesn't fire "change" or "input" event;
-    // use MutationObserver to detect value change
-   
-    onSelectedDayChanged();
-    injectStyle();
+  if (dayEl != null) {
+    stdDay = dayEl;
+    stdDayObserver = new MutationObserver(onStdTagChanged);
+    stdDayObserver.observe(stdDay, { attributes: true });
+  }
 
-     // "save" navigates to the same page with different query params => call on init
-     updateStartDate();
+  const dayElBtn = document.getElementById("std-tag-btn");
+  if (dayElBtn != null) {
+    stdDayBtn = dayElBtn;
+  }
+  // input[type="hidden"] doesn't fire "change" or "input" event;
+  // use MutationObserver to detect value change
 
-     // call highlight functions in order of precendence, starting with the lowest
-     highlightTodoComments();
-     calculateDailyWorkingHours();
+  onSelectedDayChanged();
+  injectStyle();
+
+  // "save" navigates to the same page with different query params => call on init
+  updateStartDate();
+
+  // call highlight functions in order of precendence, starting with the lowest
+  highlightTodoComments();
+  calculateDailyWorkingHours();
 };
