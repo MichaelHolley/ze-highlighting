@@ -1,16 +1,6 @@
-[![Build](https://github.com/MichaelHolley/ze-highlighting/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/MichaelHolley/ze-highlighting/actions/workflows/CI.yml)
+# ZE Highlighting 🏷️
 
-# ZE Highlighting
-
-A Chrome-Extension improving the functionality of a certain time-tracking tool.
-
-## Installation
-
-1. Download the latest version under [releases](https://github.com/MichaelHolley/ze-highlighting/releases)
-2. Extract the /dist-directory
-3. navigate to Extensions-Page (Chrome: `chrome://extensions` or Edge: `edge://extensions`)
-4. Enable Developer-Mode
-5. Click "Load unpacked" and selected the extracted folder 'dist' from step 2
+Enhance your time-tracking experience with ZE Highlighting, a Chrome extension designed to improve the functionality of your favorite time-tracking tool.
 
 ## ✨ Features:
 
@@ -18,6 +8,20 @@ A Chrome-Extension improving the functionality of a certain time-tracking tool.
 * **📝 Full Text Descriptions:** Say goodbye to truncated descriptions! The description column now always displays the complete text.
 * **🎨 Customizable Colors:** Personalize your experience! Use the extension popup to select and apply your preferred label colors.
 
-## Colors
+## 🚀 Installation:
 
-Colors can be changed by adjusting its value in its menu which can be accessed via the extension-popup in the top-right corner.
+1.  **Download:** Grab the latest release from [releases](https://github.com/MichaelHolley/ze-highlighting/releases).
+2.  **Extract:** Unzip the downloaded archive and locate the `dist` directory.
+3.  **Navigate:** Open your Chrome or Edge extensions page:
+    * Chrome: `chrome://extensions`
+    * Edge: `edge://extensions`
+4.  **Developer Mode:** Toggle on "Developer mode" in the top right corner.
+5.  **Load Unpacked:** Click "Load unpacked" and select the extracted `dist` folder.
+
+## 🤝 Contributing
+
+If you'd like to contribute to ZE Highlighting, feel free to fork the repository and submit a pull request. We welcome your contributions!
+
+## 🐛 Bug Reports
+
+If you encounter any issues or have suggestions, please open an issue on the [GitHub repository](https://github.com/MichaelHolley/ze-highlighting/issues).
