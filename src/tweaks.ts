@@ -155,7 +155,7 @@ export const initTweaks = function () {
   };
 
   const onSelectedDayChanged = function () {
-    const dateParts = stdDay.value?.split('.');
+    const dateParts = stdDay?.value?.split('.');
     if (!dateParts || dateParts.length < 2) {
       return;
     }
