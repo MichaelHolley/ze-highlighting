@@ -5,11 +5,21 @@
   "manifest_version": 3,
   "permissions": ["storage", "webNavigation"],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+            "16": "icons/timeTrackerIcon16.png",
+            "48": "icons/timeTrackerIcon48.png",
+            "128": "icons/timeTrackerIcon128.png"
+        }
   },
   "background": {
     "service_worker": "background.js"
   },
+  "icons": {
+    "16": "icons/timeTrackerIcon16.png",
+    "48": "icons/timeTrackerIcon48.png",
+    "128": "icons/timeTrackerIcon128.png"
+},
   "content_scripts": [
     {
       "matches": ["*://zeiterfassung.aracom.de/*"],
