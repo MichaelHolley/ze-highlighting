@@ -20,13 +20,16 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: "ts-loader",
-        exclude: /node_modules/,
-      },
-    ],
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: ".", to: ".", context: "public" }],
-    }),
-  ],
+      patterns: [
+        { from: ".", to: ".", context: "public" },
+        { from: "./icons", to: "./icons" }
+      ]
+    })
+  ]
 };

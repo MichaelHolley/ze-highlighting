@@ -63,7 +63,7 @@ export const initTweaks = () => {
       element.classList.add("th-duration");
       element.setAttribute(
         "style",
-        "font-weight:bold;width:35px;line-height: unset;"
+        "font-weight:bold;width:35px;line-height: unset;padding-left: 12px;"
       );
 
       const displayDuration = duration == null ? "?" : duration;
