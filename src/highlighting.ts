@@ -4,7 +4,7 @@ import {
   getConfigByPage,
   getRoute,
   hexToRgb,
-  isNumeric,
+  isNumeric
 } from "./utils";
 
 highlighting();
@@ -35,7 +35,7 @@ function highlighting() {
       ((row.attributes.getNamedItem(config.dataKey)?.value === "" ||
         row.attributes.getNamedItem(config.dataKey)?.value === undefined) &&
         row[route === Route.stundenanzeige ? "className" : "id"] ===
-        config.classId) ||
+          config.classId) ||
       row?.cells[config.columnIndex + 1]?.innerText
         ?.toLowerCase()
         .includes("urlaub")
@@ -81,16 +81,18 @@ function highlighting() {
     }
 
     if (!!config.descriptionColumIndex) {
-      let descriptionCell = row.getElementsByTagName("td")[config.descriptionColumIndex];
+      let descriptionCell =
+        row.getElementsByTagName("td")[config.descriptionColumIndex];
 
       if (descriptionCell !== undefined) {
         let readmore = descriptionCell.querySelector(".readmore");
         if (!!readmore) {
           // remove collapse button
-          descriptionCell.querySelector(".readmore-action")?.remove()
+          descriptionCell.querySelector(".readmore-action")?.remove();
 
           // remove ellipsis from description
-          const description: HTMLDivElement = readmore.children[0] as HTMLDivElement;
+          const description: HTMLDivElement = readmore
+            .children[0] as HTMLDivElement;
           if (description !== undefined) {
             description.classList.remove("ellipse");
             description.style.maxWidth = "unset";
@@ -99,7 +101,6 @@ function highlighting() {
         }
       }
     }
-
   }
 
   styleTableCells(cellsToColor);

@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack/webpack.config.js",
-    "build:watch": "webpack --config webpack/webpack.config.js --watch"
+    "build:watch": "webpack --config webpack/webpack.config.js --watch",
+    "format": "biome format --write",
+    "lint": "biome lint"
   },
   "author": "Michael Holley",
   "license": "ISC",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/chrome": "^0.0.306",
     "copy-webpack-plugin": "^12.0.2",
     "ts-loader": "^9.3.0",

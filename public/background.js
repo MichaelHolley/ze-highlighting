@@ -3,9 +3,9 @@ chrome.runtime.onInstalled.addListener(() => {
     colors: [
       {
         key: "empty",
-        color: "#54B54B",
-      },
-    ],
+        color: "#54B54B"
+      }
+    ]
   });
 
   console.log("DEFAULT SET");

@@ -11,5 +11,5 @@ export interface Highlighting {
 
 export enum Route {
   stundenanzeige,
-  stundenerfassung,
+  stundenerfassung
 }
