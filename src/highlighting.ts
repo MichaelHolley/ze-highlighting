@@ -4,7 +4,7 @@ import {
   getConfigByPage,
   getRoute,
   hexToRgb,
-  isNumeric
+  isNumeric,
 } from "./utils";
 
 highlighting();
@@ -18,7 +18,7 @@ chrome.storage.onChanged.addListener(() => {
 });
 
 function highlighting() {
-  var route = getRoute();
+  const route = getRoute();
 
   if (route === undefined) {
     return;
@@ -80,13 +80,13 @@ function highlighting() {
       }
     }
 
-    if (!!config.descriptionColumIndex) {
+    if (config.descriptionColumIndex !== undefined) {
       const descriptionCell =
         row.getElementsByTagName("td")[config.descriptionColumIndex];
 
       if (descriptionCell !== undefined) {
         const readmore = descriptionCell.querySelector(".readmore");
-        if (!!readmore) {
+        if (readmore != null) {
           // remove collapse button
           descriptionCell.querySelector(".readmore-action")?.remove();
 
