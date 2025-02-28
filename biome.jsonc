@@ -27,7 +27,8 @@
       "quoteStyle": "double",
       "indentStyle": "space",
       "indentWidth": 2,
-      "trailingCommas": "none"
+      "trailingCommas": "none",
+      "semicolons": "always"
     }
   },
   "json": {
