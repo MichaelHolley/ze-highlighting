@@ -1,4 +1,4 @@
-import { Highlighting, Route } from "./models";
+import { type Highlighting, Route } from "./models";
 import {
   generateRandomColorHex,
   getConfigByPage,
@@ -29,7 +29,7 @@ function highlighting() {
   const rows = document.getElementsByTagName("tr");
   const cellsToColor: { cell: HTMLTableCellElement; key: string }[] = [];
 
-  for (let row of rows) {
+  for (const row of rows) {
     // set reserved days for holidays
     if (
       ((row.attributes.getNamedItem(config.dataKey)?.value === "" ||
@@ -40,14 +40,14 @@ function highlighting() {
         ?.toLowerCase()
         .includes("urlaub")
     ) {
-      let cell = row.getElementsByTagName("td")[config.columnIndex];
+      const cell = row.getElementsByTagName("td")[config.columnIndex];
       cellsToColor.push({ cell: cell, key: "empty" });
       continue;
     }
 
     // set project-colors
     if (row.attributes.getNamedItem(config.dataKey)?.value !== "") {
-      let projectCell = row.getElementsByTagName("td")[config.columnIndex];
+      const projectCell = row.getElementsByTagName("td")[config.columnIndex];
 
       if (projectCell !== undefined) {
         let key = projectCell.innerText.trim() ?? "empty";
@@ -81,11 +81,11 @@ function highlighting() {
     }
 
     if (!!config.descriptionColumIndex) {
-      let descriptionCell =
+      const descriptionCell =
         row.getElementsByTagName("td")[config.descriptionColumIndex];
 
       if (descriptionCell !== undefined) {
-        let readmore = descriptionCell.querySelector(".readmore");
+        const readmore = descriptionCell.querySelector(".readmore");
         if (!!readmore) {
           // remove collapse button
           descriptionCell.querySelector(".readmore-action")?.remove();
@@ -108,9 +108,9 @@ function highlighting() {
 
 function styleTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
   chrome.storage.sync.get("colors", (res) => {
-    let storedColors = res.colors as Highlighting[];
+    const storedColors = res.colors as Highlighting[];
 
-    for (let cell of cells) {
+    for (const cell of cells) {
       let color = storedColors.find((c) => c.key === cell.key);
 
       // color not stored already -> generate one
@@ -120,7 +120,7 @@ function styleTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
       }
 
       // style cell
-      let rgbColor = hexToRgb(color.color);
+      const rgbColor = hexToRgb(color.color);
       if (rgbColor) {
         cell.cell.style.borderRightWidth = "6px";
         cell.cell.style.borderRightColor = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
