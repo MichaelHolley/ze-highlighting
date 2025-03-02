@@ -18,7 +18,6 @@ chrome.storage.sync.get('colors', (res) => {
 
       const inputColor = document.createElement('input');
       inputColor.setAttribute('type', 'color');
-      inputColor.className = 'color-input';
       inputColor.id = `${c.key}ColorInput`;
       inputColor.value = c.color;
       inputColor.addEventListener('change', (e: Event) => {
