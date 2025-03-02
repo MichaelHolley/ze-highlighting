@@ -1,7 +1,7 @@
 {
   "name": "ze-highlighting",
   "description": "Chrome-extension for AraCom time-tracking tool",
-  "version": "0.4",
+  "version": "0.7.0",
   "manifest_version": 3,
   "permissions": [
     "storage",
@@ -10,10 +10,10 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-            "16": "icons/timeTrackerIcon16.png",
-            "48": "icons/timeTrackerIcon48.png",
-            "128": "icons/timeTrackerIcon128.png"
-        }
+      "16": "icons/timeTrackerIcon16.png",
+      "48": "icons/timeTrackerIcon48.png",
+      "128": "icons/timeTrackerIcon128.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
@@ -22,14 +22,14 @@
     "16": "icons/timeTrackerIcon16.png",
     "48": "icons/timeTrackerIcon48.png",
     "128": "icons/timeTrackerIcon128.png"
-},
+  },
   "content_scripts": [
     {
       "matches": [
         "*://zeiterfassung.aracom.de/*"
       ],
       "js": [
-        "highlighting.js"
+        "executor.js"
       ]
     }
   ]

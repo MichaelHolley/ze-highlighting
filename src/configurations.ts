@@ -6,15 +6,15 @@ export interface RouteConfiguration {
 }
 
 export const StdAnzeigeConfig: RouteConfiguration = {
-  dataKey: "data-lfdnr",
-  classId: " ",
+  dataKey: 'data-lfdnr',
+  classId: ' ',
   columnIndex: 7,
   descriptionColumIndex: 5
 };
 
 export const StdErfassungConfig: RouteConfiguration = {
-  dataKey: "data-me",
-  classId: "me-",
+  dataKey: 'data-me',
+  classId: 'me-',
   columnIndex: 6,
   descriptionColumIndex: 11
 };

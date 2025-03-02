@@ -1,48 +1,43 @@
-import { StdAnzeigeConfig, StdErfassungConfig } from "./configurations";
-import { Route } from "./models";
+import { StdAnzeigeConfig, StdErfassungConfig } from './configurations';
+import type { Color } from './models';
+import { Route } from './models';
 
 export function getConfigByPage(route: Route) {
   if (route === Route.stundenanzeige) {
     return StdAnzeigeConfig;
-  } else {
-    return StdErfassungConfig;
   }
+
+  return StdErfassungConfig;
 }
 
-export function generateRandomColorHex(): any {
-  return "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+export function generateRandomColorHex(): Color {
+  return `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')}`;
 }
 
 export function isNumeric(str: string) {
-  if (typeof str != "string") return false; // only process strings!
-
-  /**
-   * use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)
-   * and ensure strings of whitespace fail
-   */
-  return !isNaN(str as any) && !isNaN(parseFloat(str));
+  if (typeof str !== 'string') return false;
+  return /^\d+$/.test(str.trim());
 }
 
 export function hexToRgb(hex: string) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16),
-    }
+        r: Number.parseInt(result[1], 16),
+        g: Number.parseInt(result[2], 16),
+        b: Number.parseInt(result[3], 16)
+      }
     : null;
 }
 
-
 export function getRoute() {
-  const urlRoute = window.location.pathname.substring(1).replace(".php", "");
+  const urlRoute = window.location.pathname.substring(1).replace('.php', '');
 
-  if (urlRoute === "" || urlRoute === "stundenanzeige") {
+  if (urlRoute === '' || urlRoute === 'stundenanzeige') {
     return Route.stundenanzeige;
   }
 
-  if (urlRoute === "stundenerfassung") {
+  if (urlRoute === 'stundenerfassung') {
     return Route.stundenerfassung;
   }
 
