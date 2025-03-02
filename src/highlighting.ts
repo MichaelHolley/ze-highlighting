@@ -1,17 +1,17 @@
-import { type Highlighting, Route } from "./models";
-import { initTweaks } from "./tweaks";
+import { type Highlighting, Route } from './models';
+import { initTweaks } from './tweaks';
 import {
   generateRandomColorHex,
   getConfigByPage,
   getRoute,
   hexToRgb,
-  isNumeric,
-} from "./utils";
+  isNumeric
+} from './utils';
 
 highlighting();
 initTweaks();
 
-addEventListener("hashchange", () => {
+addEventListener('hashchange', () => {
   highlighting();
   initTweaks();
 });
@@ -30,51 +30,51 @@ function highlighting() {
 
   const config = getConfigByPage(route);
 
-  const rows = document.getElementsByTagName("tr");
+  const rows = document.getElementsByTagName('tr');
   const cellsToColor: { cell: HTMLTableCellElement; key: string }[] = [];
 
   for (const row of rows) {
     // set reserved days for holidays
     if (
-      ((row.attributes.getNamedItem(config.dataKey)?.value === "" ||
+      ((row.attributes.getNamedItem(config.dataKey)?.value === '' ||
         row.attributes.getNamedItem(config.dataKey)?.value === undefined) &&
-        row[route === Route.stundenanzeige ? "className" : "id"] ===
+        row[route === Route.stundenanzeige ? 'className' : 'id'] ===
           config.classId) ||
       row?.cells[config.columnIndex + 1]?.innerText
         ?.toLowerCase()
-        .includes("urlaub")
+        .includes('urlaub')
     ) {
-      const cell = row.getElementsByTagName("td")[config.columnIndex];
-      cellsToColor.push({ cell: cell, key: "empty" });
+      const cell = row.getElementsByTagName('td')[config.columnIndex];
+      cellsToColor.push({ cell: cell, key: 'empty' });
       continue;
     }
 
     // set project-colors
-    if (row.attributes.getNamedItem(config.dataKey)?.value !== "") {
-      const projectCell = row.getElementsByTagName("td")[config.columnIndex];
+    if (row.attributes.getNamedItem(config.dataKey)?.value !== '') {
+      const projectCell = row.getElementsByTagName('td')[config.columnIndex];
 
       if (projectCell !== undefined) {
-        let key = projectCell.innerText.trim() ?? "empty";
+        let key = projectCell.innerText.trim() ?? 'empty';
 
-        if (route === Route.stundenanzeige && key.startsWith("Projekt")) {
-          key = key.substring("Projekt".length).trim();
+        if (route === Route.stundenanzeige && key.startsWith('Projekt')) {
+          key = key.substring('Projekt'.length).trim();
         }
 
         if (
           route === Route.stundenerfassung &&
-          key.startsWith("Projekt/Auftrag")
+          key.startsWith('Projekt/Auftrag')
         ) {
-          key = key.substring("Projekt/Auftrag".length).trim();
+          key = key.substring('Projekt/Auftrag'.length).trim();
         }
 
-        if (key === "" || !key) {
-          key = "empty";
+        if (key === '' || !key) {
+          key = 'empty';
         }
 
         if (
           isNumeric(key) ||
-          key.startsWith("Kunde") ||
-          key.includes("Urlaub") ||
+          key.startsWith('Kunde') ||
+          key.includes('Urlaub') ||
           key.match(/[0-9]+: /)
         ) {
           continue;
@@ -86,21 +86,21 @@ function highlighting() {
 
     if (config.descriptionColumIndex !== undefined) {
       const descriptionCell =
-        row.getElementsByTagName("td")[config.descriptionColumIndex];
+        row.getElementsByTagName('td')[config.descriptionColumIndex];
 
       if (descriptionCell !== undefined) {
-        const readmore = descriptionCell.querySelector(".readmore");
+        const readmore = descriptionCell.querySelector('.readmore');
         if (readmore != null) {
           // remove collapse button
-          descriptionCell.querySelector(".readmore-action")?.remove();
+          descriptionCell.querySelector('.readmore-action')?.remove();
 
           // remove ellipsis from description
           const description: HTMLDivElement = readmore
             .children[0] as HTMLDivElement;
           if (description !== undefined) {
-            description.classList.remove("ellipse");
-            description.style.maxWidth = "unset";
-            description.style.paddingRight = "0px";
+            description.classList.remove('ellipse');
+            description.style.maxWidth = 'unset';
+            description.style.paddingRight = '0px';
           }
         }
       }
@@ -111,7 +111,7 @@ function highlighting() {
 }
 
 function styleTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
-  chrome.storage.sync.get("colors", (res) => {
+  chrome.storage.sync.get('colors', (res) => {
     const storedColors = res.colors as Highlighting[];
 
     for (const cell of cells) {
@@ -126,7 +126,7 @@ function styleTableCells(cells: { cell: HTMLTableCellElement; key: string }[]) {
       // style cell
       const rgbColor = hexToRgb(color.color);
       if (rgbColor) {
-        cell.cell.style.borderRightWidth = "6px";
+        cell.cell.style.borderRightWidth = '6px';
         cell.cell.style.borderRightColor = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
       }
     }

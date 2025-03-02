@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": []
+    "ignore": ["dist/"]
   },
   "formatter": {
     "enabled": true,
@@ -24,7 +24,7 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
+      "quoteStyle": "single",
       "indentStyle": "space",
       "indentWidth": 2,
       "trailingCommas": "none",

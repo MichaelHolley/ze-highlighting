@@ -1,27 +1,27 @@
 // CONSTANTS
-const shortDaysOfWeek = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+const shortDaysOfWeek = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 const fullDaysOfWeek = [
-  "Montag",
-  "Dienstag",
-  "Mittwoch",
-  "Donnerstag",
-  "Freitag",
-  "Samstag",
-  "Sonntag",
+  'Montag',
+  'Dienstag',
+  'Mittwoch',
+  'Donnerstag',
+  'Freitag',
+  'Samstag',
+  'Sonntag'
 ];
 const oneDay = 86400000;
 // config for todo highlighting
-const todoHightlightColor = "lightyellow";
+const todoHightlightColor = 'lightyellow';
 // keyword must be all lowercase!
-const highlightKeyword = "todo";
+const highlightKeyword = 'todo';
 
-export const highlightedProjectsId = "highlightedProjects";
+export const highlightedProjectsId = 'highlightedProjects';
 
 // class where the table containing the bookings starts
-const bookingTableId = "std-buchungen-body";
+const bookingTableId = 'std-buchungen-body';
 // duration element class in table
-const duractionClass = ".td-dauer";
-const durationValueClass = ".val-show";
+const duractionClass = '.td-dauer';
+const durationValueClass = '.val-show';
 
 export const initTweaks = () => {
   // FUNCTIONS
@@ -40,7 +40,7 @@ export const initTweaks = () => {
           return 0;
         }
 
-        const floatString = durationValueElement.textContent?.replace(",", ".");
+        const floatString = durationValueElement.textContent?.replace(',', '.');
         if (!floatString) {
           continue;
         }
@@ -55,18 +55,18 @@ export const initTweaks = () => {
       header: Element,
       duration: number
     ) {
-      if (header.querySelector(".th-duration")) {
+      if (header.querySelector('.th-duration')) {
         return;
       }
 
-      const element = document.createElement("span");
-      element.classList.add("th-duration");
+      const element = document.createElement('span');
+      element.classList.add('th-duration');
       element.setAttribute(
-        "style",
-        "font-weight:bold;width:35px;line-height: unset;padding-left: 12px;"
+        'style',
+        'font-weight:bold;width:35px;line-height: unset;padding-left: 12px;'
       );
 
-      const displayDuration = duration == null ? "?" : duration;
+      const displayDuration = duration == null ? '?' : duration;
       element.innerText = `  ${displayDuration} Std`;
 
       header.children[0].appendChild(element);
@@ -82,7 +82,7 @@ export const initTweaks = () => {
     let duration = 0.0;
     for (const row of table.children) {
       // header element of days has no id
-      if (row.id === "") {
+      if (row.id === '') {
         if (children.length !== 0) {
           duration = calculateDuration(children);
 
@@ -107,7 +107,7 @@ export const initTweaks = () => {
   const highlightTodoComments = () => {
     // get all comments (div elements)
     const commentNodes = Array(
-      ...document.getElementsByClassName("readmore-text")
+      ...document.getElementsByClassName('readmore-text')
     );
 
     const todoNodes = commentNodes.filter((node) =>
@@ -122,7 +122,7 @@ export const initTweaks = () => {
   const findAndHighlightContainingTableRow = (node: Element, color: string) => {
     const todoTds = [];
     // get tr
-    const tr = node.closest("tr");
+    const tr = node.closest('tr');
     if (!tr) {
       return;
     }
@@ -131,16 +131,16 @@ export const initTweaks = () => {
 
     // override the background-color of all columns
     for (const todoTd of todoTds) {
-      todoTd.setAttribute("style", `background-color: ${color}`);
+      todoTd.setAttribute('style', `background-color: ${color}`);
     }
   };
 
   const updateStartDate = () => {
     const insertFrom = document.getElementById(
-      "insert-von"
+      'insert-von'
     ) as HTMLInputElement | null;
     const insertUntil = document.getElementById(
-      "insert-bis"
+      'insert-bis'
     ) as HTMLInputElement | null;
 
     if (!insertFrom || !insertUntil) {
@@ -149,37 +149,37 @@ export const initTweaks = () => {
 
     // set value of intertUntil as value of insertFrom input
     insertFrom.value = insertUntil.value;
-    insertUntil.value = "";
+    insertUntil.value = '';
     insertUntil.focus();
   };
 
   // Causes green borders to appear for today's calendar field
   const injectStyle = () => {
-    const css = document.createElement("style");
-    css.type = "text/css";
+    const css = document.createElement('style');
+    css.type = 'text/css';
     css.appendChild(
       document.createTextNode(
-        "\
+        '\
 .ui-datepicker-calendar td.ui-datepicker-today { \
   background: #62882f;\
 }\
 .ui-datepicker-calendar td.ui-datepicker-today a:not(.ui-btn-active) {\
   padding: .4em .5em;\
   margin: auto;\
-}"
+}'
       )
     );
-    document.getElementsByTagName("head")[0].appendChild(css);
+    document.getElementsByTagName('head')[0].appendChild(css);
   };
 
   const onStdTagChanged = (mutations: MutationRecord[]) => {
-    if (mutations[0].attributeName === "value") {
+    if (mutations[0].attributeName === 'value') {
       onSelectedDayChanged();
     }
   };
 
   const onSelectedDayChanged = () => {
-    const dateParts = stdDay?.value?.split(".");
+    const dateParts = stdDay?.value?.split('.');
     if (!dateParts || dateParts.length < 2) {
       return;
     }
@@ -220,16 +220,16 @@ export const initTweaks = () => {
     const diff = selected - today;
 
     stdDayBtn;
-    stdDayBtn.classList.remove("ui-btn-f", "ui-btn-g", "ui-btn-b");
+    stdDayBtn.classList.remove('ui-btn-f', 'ui-btn-g', 'ui-btn-b');
     if (selected === today) {
-      stdDayBtn.classList.add("ui-btn-g");
+      stdDayBtn.classList.add('ui-btn-g');
     } else if (selected < today) {
-      stdDayBtn.classList.add("ui-btn-f");
+      stdDayBtn.classList.add('ui-btn-f');
     } else {
-      stdDayBtn.classList.add("ui-btn-b");
+      stdDayBtn.classList.add('ui-btn-b');
     }
 
-    let inWords = "";
+    let inWords = '';
     if (diff < -oneDay && diff >= -7 * oneDay) {
       if (selectedDoW < todayDoW) {
         inWords = `${fullDaysOfWeek[selectedDoW]} (`;
@@ -245,27 +245,27 @@ export const initTweaks = () => {
     } else {
       switch (diff) {
         case -oneDay:
-          inWords = "Gestern";
+          inWords = 'Gestern';
           break;
         case 0:
-          inWords = "Heute";
+          inWords = 'Heute';
           break;
         case oneDay:
-          inWords = "Morgen";
+          inWords = 'Morgen';
           break;
       }
-      if (inWords !== "") {
+      if (inWords !== '') {
         inWords += `, ${shortDaysOfWeek[selectedDoW]} (`;
       }
     }
 
-    if (inWords === "") {
+    if (inWords === '') {
       stdDayBtn.textContent = `${shortDaysOfWeek[selectedDoW]}., ${stdDay.value}`;
     } else {
-      const dateStr = selectedDate.getDate().toString().padStart(2, "0");
+      const dateStr = selectedDate.getDate().toString().padStart(2, '0');
       const monthStr = (selectedDate.getMonth() + 1)
         .toString()
-        .padStart(2, "0");
+        .padStart(2, '0');
       stdDayBtn.textContent = `${inWords}${dateStr}.${monthStr}.)`;
     }
   };
@@ -275,7 +275,7 @@ export const initTweaks = () => {
   let stdDayBtn: Element;
   let stdDayObserver: MutationObserver;
 
-  const dayEl = document.getElementById("std-tag") as HTMLInputElement | null;
+  const dayEl = document.getElementById('std-tag') as HTMLInputElement | null;
 
   if (dayEl != null) {
     stdDay = dayEl;
@@ -283,7 +283,7 @@ export const initTweaks = () => {
     stdDayObserver.observe(stdDay, { attributes: true });
   }
 
-  const dayElBtn = document.getElementById("std-tag-btn");
+  const dayElBtn = document.getElementById('std-tag-btn');
   if (dayElBtn != null) {
     stdDayBtn = dayElBtn;
   }

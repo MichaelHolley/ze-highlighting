@@ -3,10 +3,7 @@
   "description": "Chrome-extension for AraCom time-tracking tool",
   "version": "0.7.0",
   "manifest_version": 3,
-  "permissions": [
-    "storage",
-    "webNavigation"
-  ],
+  "permissions": ["storage", "webNavigation"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -25,12 +22,8 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://zeiterfassung.aracom.de/*"
-      ],
-      "js": [
-        "highlighting.js"
-      ]
+      "matches": ["*://zeiterfassung.aracom.de/*"],
+      "js": ["highlighting.js"]
     }
   ]
 }

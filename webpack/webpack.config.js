@@ -1,25 +1,25 @@
-const path = require("node:path");
-const CopyPlugin = require("copy-webpack-plugin");
+const path = require('node:path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  mode: "production",
+  mode: 'production',
   entry: {
-    highlighting: path.resolve(__dirname, "..", "src", "highlighting.ts"),
-    popup: path.resolve(__dirname, "..", "src", "popup.ts"),
-    tweaks: path.resolve(__dirname, "..", "src", "tweaks.ts")
+    highlighting: path.resolve(__dirname, '..', 'src', 'highlighting.ts'),
+    popup: path.resolve(__dirname, '..', 'src', 'popup.ts'),
+    tweaks: path.resolve(__dirname, '..', 'src', 'tweaks.ts')
   },
   output: {
-    path: path.join(__dirname, "../dist"),
-    filename: "[name].js"
+    path: path.join(__dirname, '../dist'),
+    filename: '[name].js'
   },
   resolve: {
-    extensions: [".ts", ".js"]
+    extensions: ['.ts', '.js']
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: "ts-loader",
+        loader: 'ts-loader',
         exclude: /node_modules/
       }
     ]
@@ -27,8 +27,8 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: ".", to: ".", context: "public" },
-        { from: "./icons", to: "./icons" }
+        { from: '.', to: '.', context: 'public' },
+        { from: './icons', to: './icons' }
       ]
     })
   ]
