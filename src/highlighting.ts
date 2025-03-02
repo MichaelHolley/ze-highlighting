@@ -18,7 +18,6 @@ addEventListener('hashchange', () => {
 
 chrome.storage.onChanged.addListener(() => {
   highlighting();
-  initTweaks();
 });
 
 function highlighting() {
