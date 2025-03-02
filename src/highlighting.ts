@@ -33,6 +33,7 @@ function highlighting() {
   const cellsToColor: { cell: HTMLTableCellElement; key: string }[] = [];
 
   for (const row of rows) {
+    // removing the ellipsis on descriptions
     if (config.descriptionColumIndex) {
       const descriptionCell =
         row.getElementsByTagName('td')[config.descriptionColumIndex];
@@ -74,22 +75,36 @@ function highlighting() {
     if (row.attributes.getNamedItem(config.dataKey)?.value !== '') {
       const projectCell = row.getElementsByTagName('td')[config.columnIndex];
 
-      if (projectCell !== undefined) {
+      if (projectCell) {
         let key = projectCell.innerText.trim() ?? 'empty';
 
-        if (route === Route.stundenanzeige && key.startsWith('Projekt')) {
-          key = key.substring('Projekt'.length).trim();
+        if (key === 'Projekt intern') {
+          cellsToColor.push({ cell: projectCell, key: key });
+          continue;
         }
 
+        // Stundenanzeige uses 'Projekt' prefix
+        if (route === Route.stundenanzeige && key.startsWith('Projekt')) {
+          key = key.substring('Projekt'.length).trim();
+          cellsToColor.push({ cell: projectCell, key: key });
+          continue;
+        }
+
+        // stundenerfassung uses 'Projekt/Auftrag' prefix
         if (
           route === Route.stundenerfassung &&
           key.startsWith('Projekt/Auftrag')
         ) {
           key = key.substring('Projekt/Auftrag'.length).trim();
+          cellsToColor.push({ cell: projectCell, key: key });
+          continue;
         }
 
+        // empty value like holidays or sick leave
         if (key === '' || !key) {
           key = 'empty';
+          cellsToColor.push({ cell: projectCell, key: key });
+          continue;
         }
 
         if (
@@ -98,10 +113,7 @@ function highlighting() {
           key.includes('Urlaub') ||
           key.match(/[0-9]+: /)
         ) {
-          continue;
         }
-
-        cellsToColor.push({ cell: projectCell, key: key });
       }
     }
   }
