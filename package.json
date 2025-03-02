@@ -8,7 +8,8 @@
     "build:watch": "webpack --config webpack/webpack.config.js --watch",
     "format": "biome format --write",
     "lint": "biome lint",
-    "lint:write": "biome lint --write"
+    "lint:write": "biome lint --write",
+    "test": "vitest run"
   },
   "author": "Michael Holley",
   "license": "ISC",
@@ -16,8 +17,10 @@
     "@biomejs/biome": "1.9.4",
     "@types/chrome": "^0.0.306",
     "copy-webpack-plugin": "^12.0.2",
+    "jsdom": "^26.0.0",
     "ts-loader": "^9.3.0",
     "typescript": "^5.3.3",
+    "vitest": "^3.0.7",
     "webpack": "^5.72.0",
     "webpack-cli": "^6.0.1"
   }

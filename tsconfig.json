@@ -9,5 +9,6 @@
     "outDir": "dist/js",
     "noEmitOnError": true,
     "typeRoots": ["node_modules/@types"]
-  }
+  },
+  "exclude": ["node_modules", "dist", "vitest.config.ts"]
 }
