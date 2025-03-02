@@ -1,5 +1,4 @@
 import { type Highlighting, Route } from './models';
-import { initTweaks } from './tweaks';
 import {
   generateRandomColorHex,
   getConfigByPage,
@@ -8,19 +7,7 @@ import {
   isNumeric
 } from './utils';
 
-highlighting();
-initTweaks();
-
-addEventListener('hashchange', () => {
-  highlighting();
-  initTweaks();
-});
-
-chrome.storage.onChanged.addListener(() => {
-  highlighting();
-});
-
-function highlighting() {
+export function highlighting() {
   const route = getRoute();
 
   if (route === undefined) {

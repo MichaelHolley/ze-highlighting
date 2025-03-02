@@ -23,7 +23,7 @@ const bookingTableId = 'std-buchungen-body';
 const duractionClass = '.td-dauer';
 const durationValueClass = '.val-show';
 
-export const initTweaks = () => {
+export const tweaks = () => {
   // FUNCTIONS
   const calculateDailyWorkingHours = () => {
     function calculateDuration(elements: Array<Element>): number {
