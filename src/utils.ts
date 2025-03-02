@@ -15,13 +15,8 @@ export function generateRandomColorHex(): Color {
 }
 
 export function isNumeric(str: string) {
-  if (typeof str !== 'string') return false; // only process strings!
-
-  /**
-   * use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)
-   * and ensure strings of whitespace fail
-   */
-  return !Number.isNaN(str) && !Number.isNaN(Number.parseFloat(str));
+  if (typeof str !== 'string') return false;
+  return /^\d+$/.test(str.trim());
 }
 
 export function hexToRgb(hex: string) {
