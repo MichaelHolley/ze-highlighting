@@ -33,6 +33,28 @@ function highlighting() {
   const cellsToColor: { cell: HTMLTableCellElement; key: string }[] = [];
 
   for (const row of rows) {
+    if (config.descriptionColumIndex) {
+      const descriptionCell =
+        row.getElementsByTagName('td')[config.descriptionColumIndex];
+
+      if (descriptionCell) {
+        const readmore = descriptionCell.querySelector('.readmore');
+        if (readmore != null) {
+          // remove collapse button
+          descriptionCell.querySelector('.readmore-action')?.remove();
+
+          // remove ellipsis from description
+          const description: HTMLDivElement = readmore
+            .children[0] as HTMLDivElement;
+          if (description !== undefined) {
+            description.classList.remove('ellipse');
+            description.style.maxWidth = 'unset';
+            description.style.paddingRight = '0px';
+          }
+        }
+      }
+    }
+
     // set reserved days for holidays
     if (
       ((row.attributes.getNamedItem(config.dataKey)?.value === '' ||
@@ -80,28 +102,6 @@ function highlighting() {
         }
 
         cellsToColor.push({ cell: projectCell, key: key });
-      }
-    }
-
-    if (config.descriptionColumIndex !== undefined) {
-      const descriptionCell =
-        row.getElementsByTagName('td')[config.descriptionColumIndex];
-
-      if (descriptionCell !== undefined) {
-        const readmore = descriptionCell.querySelector('.readmore');
-        if (readmore != null) {
-          // remove collapse button
-          descriptionCell.querySelector('.readmore-action')?.remove();
-
-          // remove ellipsis from description
-          const description: HTMLDivElement = readmore
-            .children[0] as HTMLDivElement;
-          if (description !== undefined) {
-            description.classList.remove('ellipse');
-            description.style.maxWidth = 'unset';
-            description.style.paddingRight = '0px';
-          }
-        }
       }
     }
   }
