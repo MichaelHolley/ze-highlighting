@@ -90,15 +90,11 @@ function highlighting() {
           continue;
         }
 
-        if (isNumeric(key)) console.log(key, 'FUCK');
-
         if (
           isNumeric(key) ||
           key.startsWith('Kunde') ||
           key.includes('Urlaub')
         ) {
-          console.log(key);
-
           continue;
         }
 
