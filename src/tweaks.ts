@@ -31,19 +31,20 @@ export const tweaks = () => {
       for (const child of elements) {
         const durationElement = child.querySelector(duractionClass);
         if (!durationElement) {
-          return 0;
+          continue;
         }
 
         const durationValueElement =
           durationElement.querySelector(durationValueClass);
         if (!durationValueElement) {
-          return 0;
+          continue;
         }
 
         const floatString = durationValueElement.textContent?.replace(',', '.');
         if (!floatString) {
           continue;
         }
+
         const floatValue = Number.parseFloat(floatString);
         currentDuration += floatValue;
       }
