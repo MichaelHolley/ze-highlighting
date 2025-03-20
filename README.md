@@ -4,13 +4,13 @@ Enhance your time-tracking experience with ZE Highlighting, a Chrome extension d
 
 ## ✨ Features:
 
-* **🏷️ Colored Labels:** Easily highlight projects with customizable colored labels for quick identification.
+* **🏷️ Colored Labels:** Easily highlight projects with customizable colored labels for quick identification. 
+* **➕ Sum Working-Hours:** Never calculate yourself again! Display the sum of hours worked on each day.
 * **📝 Full Text Descriptions:** Say goodbye to truncated descriptions! The description column now always displays the complete text.
 * **🎨 Customizable Colors:** Personalize your experience! Use the extension popup to select and apply your preferred label colors.
 * **📅 Better Current Day Display:** Never book your times on the wrong date! The current day field has more info and colors.
 * **🚓 Start Time and Focus:** Book times faster! Set the end-time of the last entry as next start-time and focus the end time.
 * **📭 ToDos Highlight:** Make your ToDo Comments more visible in the description.
-* **➕ Sum Working-Hours:** Never calculate yourself again! Display the sum of hours worked on each day.
 
 
 ## 🚀 Installation:
