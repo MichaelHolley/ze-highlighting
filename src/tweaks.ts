@@ -67,7 +67,7 @@ export const tweaks = () => {
         'font-weight:bold;width:35px;line-height: unset;padding-left: 12px;'
       );
 
-      const displayDuration = duration == null ? '?' : duration;
+      const displayDuration = duration == null ? '?' : duration.toFixed(2);
       element.innerText = `  ${displayDuration} Std`;
 
       header.children[0].appendChild(element);

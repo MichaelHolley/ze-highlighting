@@ -1,7 +1,7 @@
 {
   "name": "ze-highlighting",
   "description": "Chrome-extension for AraCom time-tracking tool",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "manifest_version": 3,
   "permissions": ["storage", "webNavigation"],
   "action": {
