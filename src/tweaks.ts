@@ -1,6 +1,6 @@
 // CONSTANTS
-const shortDaysOfWeek = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-const fullDaysOfWeek = [
+const SHORT_DAYS_OF_THE_WEEK = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+const DAYS_OF_THE_WEEK = [
   'Montag',
   'Dienstag',
   'Mittwoch',
@@ -9,11 +9,12 @@ const fullDaysOfWeek = [
   'Samstag',
   'Sonntag'
 ];
-const oneDay = 86_400_000;
+
+const SINGLE_DAY_MS = 86_400_000;
+
 // config for todo highlighting
-const todoHightlightColor = 'lightyellow';
-// keyword must be all lowercase!
-const highlightKeyword = 'todo';
+const TODO_HIGHLIGHT_COLOR = 'lightyellow';
+const TODO_HIGHLIGHT_KEYWORD = 'todo'; // must be lowercase
 
 // class where the table containing the bookings starts
 const bookingTableId = 'std-buchungen-body';
@@ -21,9 +22,9 @@ const bookingTableId = 'std-buchungen-body';
 const duractionClass = '.td-dauer';
 const durationValueClass = '.val-show';
 
-export const tweaks = () => {
+export function tweaks() {
   // FUNCTIONS
-  const calculateDailyWorkingHours = () => {
+  function calculateDailyWorkingHours() {
     function calculateDuration(elements: Array<Element>): number {
       let currentDuration = 0.0;
       for (const child of elements) {
@@ -101,24 +102,24 @@ export const tweaks = () => {
     if (header) {
       createDurationElementIfNotExisting(header, duration);
     }
-  };
+  }
 
-  const highlightTodoComments = () => {
+  function highlightTodoComments() {
     // get all comments (div elements)
     const commentNodes = Array(
       ...document.getElementsByClassName('readmore-text')
     );
 
     const todoNodes = commentNodes.filter((node) =>
-      node.textContent?.toLowerCase().includes(highlightKeyword)
+      node.textContent?.toLowerCase().includes(TODO_HIGHLIGHT_KEYWORD)
     );
 
     for (const node of todoNodes) {
-      findAndHighlightContainingTableRow(node, todoHightlightColor);
+      findAndHighlightContainingTableRow(node, TODO_HIGHLIGHT_COLOR);
     }
-  };
+  }
 
-  const findAndHighlightContainingTableRow = (node: Element, color: string) => {
+  function findAndHighlightContainingTableRow(node: Element, color: string) {
     const todoTds = [];
     // get tr
     const tr = node.closest('tr');
@@ -132,9 +133,9 @@ export const tweaks = () => {
     for (const todoTd of todoTds) {
       todoTd.setAttribute('style', `background-color: ${color}`);
     }
-  };
+  }
 
-  const updateStartDate = () => {
+  function updateStartDate() {
     const insertFrom = document.getElementById(
       'insert-von'
     ) as HTMLInputElement | null;
@@ -150,10 +151,10 @@ export const tweaks = () => {
     insertFrom.value = insertUntil.value;
     insertUntil.value = '';
     insertUntil.focus();
-  };
+  }
 
   // Causes green borders to appear for today's calendar field
-  const injectStyle = () => {
+  function injectStyle() {
     const css = document.createElement('style');
     css.type = 'text/css';
     css.appendChild(
@@ -169,15 +170,15 @@ export const tweaks = () => {
       )
     );
     document.getElementsByTagName('head')[0].appendChild(css);
-  };
+  }
 
-  const onStdTagChanged = (mutations: MutationRecord[]) => {
+  function onStdTagChanged(mutations: MutationRecord[]) {
     if (mutations[0].attributeName === 'value') {
       onSelectedDayChanged();
     }
-  };
+  }
 
-  const onSelectedDayChanged = () => {
+  function onSelectedDayChanged() {
     const dateParts = stdDay?.value?.split('.');
     if (!dateParts || dateParts.length < 2) {
       return;
@@ -229,37 +230,38 @@ export const tweaks = () => {
     }
 
     let inWords = '';
-    if (diff < -oneDay && diff >= -7 * oneDay) {
+    if (diff < -SINGLE_DAY_MS && diff >= -7 * SINGLE_DAY_MS) {
       if (selectedDoW < todayDoW) {
-        inWords = `${fullDaysOfWeek[selectedDoW]} (`;
+        inWords = `${DAYS_OF_THE_WEEK[selectedDoW]} (`;
       } else {
-        inWords = `lz. ${fullDaysOfWeek[selectedDoW]} (`;
+        inWords = `lz. ${DAYS_OF_THE_WEEK[selectedDoW]} (`;
       }
-    } else if (diff > oneDay && diff <= 7 * oneDay) {
+    } else if (diff > SINGLE_DAY_MS && diff <= 7 * SINGLE_DAY_MS) {
       if (selectedDoW > todayDoW) {
-        inWords = `${fullDaysOfWeek[selectedDoW]} (`;
+        inWords = `${DAYS_OF_THE_WEEK[selectedDoW]} (`;
       } else {
-        inWords = `nä. ${fullDaysOfWeek[selectedDoW]} (`;
+        inWords = `nä. ${DAYS_OF_THE_WEEK[selectedDoW]} (`;
       }
     } else {
       switch (diff) {
-        case -oneDay:
+        case -SINGLE_DAY_MS:
           inWords = 'Gestern';
           break;
         case 0:
           inWords = 'Heute';
           break;
-        case oneDay:
+        case SINGLE_DAY_MS:
           inWords = 'Morgen';
           break;
       }
+
       if (inWords !== '') {
-        inWords += `, ${shortDaysOfWeek[selectedDoW]} (`;
+        inWords += `, ${SHORT_DAYS_OF_THE_WEEK[selectedDoW]} (`;
       }
     }
 
     if (inWords === '') {
-      stdDayBtn.textContent = `${shortDaysOfWeek[selectedDoW]}., ${stdDay.value}`;
+      stdDayBtn.textContent = `${SHORT_DAYS_OF_THE_WEEK[selectedDoW]}., ${stdDay.value}`;
     } else {
       const dateStr = selectedDate.getDate().toString().padStart(2, '0');
       const monthStr = (selectedDate.getMonth() + 1)
@@ -267,7 +269,7 @@ export const tweaks = () => {
         .padStart(2, '0');
       stdDayBtn.textContent = `${inWords}${dateStr}.${monthStr}.)`;
     }
-  };
+  }
 
   // VARIABLES
   let stdDay: HTMLInputElement;
@@ -298,4 +300,4 @@ export const tweaks = () => {
   // call highlight functions in order of precendence, starting with the lowest
   highlightTodoComments();
   calculateDailyWorkingHours();
-};
+}
