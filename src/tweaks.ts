@@ -9,13 +9,11 @@ const fullDaysOfWeek = [
   'Samstag',
   'Sonntag'
 ];
-const oneDay = 86400000;
+const oneDay = 86_400_000;
 // config for todo highlighting
 const todoHightlightColor = 'lightyellow';
 // keyword must be all lowercase!
 const highlightKeyword = 'todo';
-
-export const highlightedProjectsId = 'highlightedProjects';
 
 // class where the table containing the bookings starts
 const bookingTableId = 'std-buchungen-body';
